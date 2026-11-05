@@ -26,7 +26,13 @@ int MaxInTree(Node *head)
 
     return max(head->val,max(MaxInTree(head->left),MaxInTree(head->right)));
 }
+int level(Node *head)
+{
+    if (head == NULL)
+        return 0;
 
+    return 1 + max(level(head->left), level(head->right));
+}
 
 int main()
 {
