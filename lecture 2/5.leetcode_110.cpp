@@ -105,7 +105,7 @@ public:
         }
 
 
-        return 1 + max(level(head->left), level(head->right));
+        return 1 + max(r,l);
     }
 
     bool isBalanced(TreeNode *root)
