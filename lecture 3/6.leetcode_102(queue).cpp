@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <queue>
 #include <vector>
 using namespace std;
 
@@ -25,19 +26,42 @@ public:
         left = right = NULL;
     }
 };
-int level(TreeNode *head)
+class Pair{
+    public:
+        TreeNode *node;
+        int level;
+        Pair(TreeNode *node, int level)
+        {
+            this->node = node;
+            this->level = level;
+        }
+};
+int level(TreeNode *root)
 {
-    if (head == NULL)
+    if (root == NULL)
         return 0;
 
-    return 1 + max(level(head->left), level(head->right));
+    return 1 + max(level(root->left), level(root->right));
 }
-
-
 vector<vector<int>> levelOrder(TreeNode *root)
 {
-    vector<vector<int>> v;
-    
+    int n = level(root);
+    vector<vector<int>>v(n, vector<int>(0));
+    queue<Pair> q;
+    if (root != NULL)
+        q.push({root,0});
+    while (q.size() != 0)
+    {
+        Pair front= q.front();
+        q.pop();
+        TreeNode*node=front.node;
+        int level=front.level;
+        v[level].push_back(node->val);
+        if (node->left != NULL)
+            q.push({node->left, level + 1});
+        if (node->right != NULL)
+            q.push({node->right, level + 1});
+    }
     return v;
 }
 
